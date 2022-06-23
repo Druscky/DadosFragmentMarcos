@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.promedia.test_2.databinding.FragmentFirstBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +21,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class FirstFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    private lateinit var b:FragmentFirstBinding
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var myView : View
@@ -44,28 +46,24 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        myView = inflater.inflate(R.layout.fragment_first, container, false)
-        //b = FragmentFirstBinding.inflate(inflater)
-
-        val ivDado1 = myView.findViewById<ImageView>(R.id.ivDado1)
-        val ivDado2 = myView.findViewById<ImageView>(R.id.ivDado2)
-
-        ivDado1.setOnClickListener { clickOnDado() }
-        ivDado2.setOnClickListener { clickOnDado() }
-
+        b = FragmentFirstBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        return myView
+        //return = inflater.inflate(R.layout.fragment_first, container, false)
+        return b.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        b.ivDado1.setOnClickListener { clickOnDado() }
+        b.ivDado2.setOnClickListener { clickOnDado() }
     }
 
     fun clickOnDado(){
         val d1 = (1..6).random()
         val d2 = (1..6).random()
-        val ivDado1 = myView.findViewById<ImageView>(R.id.ivDado1)
-        val ivDado2 = myView.findViewById<ImageView>(R.id.ivDado2)
-        val tvCont = myView.findViewById<TextView>(R.id.tvContador)
-        ivDado1.setImageResource(dados[d1-1])
-        ivDado2.setImageResource(dados[d2-1])
-        tvCont.text = (d1 + d2).toString()
+        b.ivDado1.setImageResource(dados[d1-1])
+        b.ivDado2.setImageResource(dados[d2-1])
+        b.tvContador.text = (d1 + d2).toString()
     }
 
     companion object {
